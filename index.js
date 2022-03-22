@@ -9,29 +9,45 @@ const files = fs.readdirSync(folderPath);
 if(config.replaceOnStartup) fs.writeFileSync(outdirFile, "")
 files.forEach(file => {
     if(config.blacklistedFiles.includes(file)) return;
-    if(config.filterFileFormat.enable && !file.includes(config.filterFileFormat.format)) return;
+    if(config.filterFileFormat.enable && !file.endsWith(config.filterFileFormat.format)) return;
     console.log("Writing " + file);
 
 
-    const fileContent = {};
+    const fileContents = [];
     if(config.filterFileFormat.format.toLowerCase() == ".xlsx") {
         const sheetsFile = xlsx.readFile(path.join(folderPath, file));
         const sheetContents = [];
         for(const sheetName of sheetsFile.SheetNames) {
             const sheetFile = sheetsFile.Sheets[sheetName];
             const string = xlsx.utils.sheet_to_csv(sheetFile);
-            const arraysString = string.trim().split('\n');
+            const arraysString = string.split('\n')
+	        if(config.filterFileFormat.skipLines > 0) arraysString.splice(0, config.filterFileFormat.skipLines);
 
-	        arraysString.splice(0, config.filterFileFormat.skipLines);
             sheetContents.push(...arraysString);
         }
 
-        const finalSheetContent = sheetContents.join('\n');
-        if(finalSheetContent != undefined) fileContent.text = finalSheetContent
+        if(finalSheetContent != undefined) fileContents.push(...sheetContents);
     } else {
-        fileContent = fs.readFileSync(outdirFile, {encoding: "utf-8"})
+        const readedFile = fs.readFileSync(path.join(folderPath, file), {encoding: "utf-8"}).split('\n');
+        fileContents.push(...readedFile);
+        if(config.filterFileFormat.skipLines > 0) {
+            if(config.filterFileFormat.skipLines > 0) 
+                fileContents.splice(0, config.filterFileFormat.skipLines)
+        }
     }
 
+
     const originalContent = fs.readFileSync(outdirFile);
-    fs.writeFileSync(outdirFile, originalContent.length == 0 ? fileContent.text : `${originalContent}\n${fileContent.text}`);
+    if(fileContents.length == 0) {
+        console.log("There is no content to be writed");
+        
+        return;
+    }
+
+    if(config.sort != undefined) {
+    }
+
+    fs.writeFileSync(outdirFile, `${originalContent}\n${fileContents.join('\n')}`)
 });
+
+
