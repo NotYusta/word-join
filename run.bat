@@ -3,5 +3,5 @@
 echo.
 call npm i -g yarn
 call yarn
-call node dist/index.js
+call node index.js
 pause
