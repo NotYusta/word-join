@@ -8,7 +8,10 @@ export const run = (config: IConfig) => {
     const folderPath = path.join(config.folderPath)
     const files = fs.readdirSync(folderPath)
 
-    if (config.out.file && config.out.file.length > 0 && config.resetOnStart) fs.writeFileSync(outdirFile, '')
+    if (config.out.file && config.out.file.length > 0 && config.resetOnStart) {
+        fs.mkdirSync(config.out.dir, {recursive: true})
+        fs.writeFileSync(outdirFile, '')
+    }
     files.forEach((fileName) => {
         if (config.blacklistedFiles.includes(fileName)) return
         if (config.filterFileFormat.enable && !fileName.endsWith(config.filterFileFormat.format)) return
