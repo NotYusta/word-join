@@ -34,8 +34,10 @@ const run = (config) => {
     const outdirFile = path.join(config.out.dir, config.out.file || '');
     const folderPath = path.join(config.folderPath);
     const files = fs.readdirSync(folderPath);
-    if (config.out.file && config.out.file.length > 0 && config.resetOnStart)
+    if (config.out.file && config.out.file.length > 0 && config.resetOnStart) {
+        fs.mkdirSync(config.out.dir, { recursive: true });
         fs.writeFileSync(outdirFile, '');
+    }
     files.forEach((fileName) => {
         if (config.blacklistedFiles.includes(fileName))
             return;
@@ -62,7 +64,7 @@ const run = (config) => {
                     rFileContent.splice(0, config.filterFileFormat.skipLines);
             }
             if (config.sort.enable) {
-                rFileContent = config.sort.exec(rFileContent);
+                rFileContent = config.sort.exec(rFileContent, config);
             }
             fileContents = rFileContent;
         }

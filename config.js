@@ -1,11 +1,11 @@
 /**
  * @type {import('./src/config').ISortExec}
  */
-const sortPreset1 = (content) => {
+const sortPreset1 = (content, config) => {
     // probably cost much memory lmao.
     const pKeys = []
     for(const ctn of content) {
-        if(!ctn.toLowerCase().startsWith('s')) continue;
+        if(!ctn.toLowerCase().startsWith(config.sort.startsWith)) continue;
         
         const keys = ctn.split(' ').filter((s) => s.length > 0)
         const pKey = keys[0]
@@ -62,6 +62,7 @@ const config = {
     },
     sort: {
         enable: true,
+        startsWith: "s",
         exec: sortPreset1,
     },
     resetOnStart: true,

@@ -1,4 +1,3 @@
-export type ISortExec = (content: string[]) => string[]
 export interface IConfig {
     folderPath: string
     blacklistedFiles: string[]
@@ -17,3 +16,5 @@ export interface IConfig {
     }
     resetOnStart: true
 }
+
+export type ISortExec = (content: string[], config: IConfig) => string[]

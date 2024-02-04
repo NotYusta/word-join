@@ -36,7 +36,7 @@ export const run = (config: IConfig) => {
             }
 
             if (config.sort.enable) {
-                rFileContent = config.sort.exec(rFileContent)
+                rFileContent = config.sort.exec(rFileContent, config)
             }
 
             fileContents = rFileContent
