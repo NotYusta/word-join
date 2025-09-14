@@ -8,7 +8,7 @@ out:
 filterFileFormat:
   enable: true
   format: .UKLIST
-  skipLines: 1
+  skipLines: 0
 sort:
   enable: true
   exec: regex   # or "starts_with"
