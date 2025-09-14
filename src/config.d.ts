@@ -13,6 +13,7 @@ export interface IConfig {
     sort: {
         enable: boolean
         exec: ISortExec
+        match: string
     }
     resetOnStart: true
 }
