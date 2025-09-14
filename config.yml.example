@@ -1,0 +1,16 @@
+folderPath: ./tests/in
+blacklistedFiles:
+  - README.md
+  - ignore.txt
+out:
+  dir: ./tests/out
+  file: merged.txt
+filterFileFormat:
+  enable: true
+  format: .UKLIST
+  skipLines: 1
+sort:
+  enable: true
+  exec: regex   # or "starts_with"
+  match: "^SMGR-\\d+"
+resetOnStart: true

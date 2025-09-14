@@ -18,4 +18,24 @@ export interface IConfig {
     resetOnStart: true
 }
 
+export interface IConfigStr {
+    folderPath: string
+    blacklistedFiles: string[]
+    out: {
+        dir: string
+        file: string
+    }
+    filterFileFormat: {
+        enable: boolean
+        format: string
+        skipLines: number
+    }
+    sort: {
+        enable: boolean
+        exec: 'regex' | 'starts_with'
+        match: string
+    }
+    resetOnStart: true
+}
+
 export type ISortExec = (content: string[], config: IConfig) => string[]

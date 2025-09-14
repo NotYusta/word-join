@@ -1,7 +1,7 @@
 
 @echo off
 echo.
-call npm i -g yarn
-call yarn
+call npm i
+call npm run build
 call node index.js
 pause

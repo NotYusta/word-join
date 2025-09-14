@@ -1,9 +1,12 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import xlsx from 'xlsx'
-import { IConfig } from './config'
+import { IConfig } from './typings/config'
+import { loadConfig } from './config'
 
-export const run = (config: IConfig) => {
+
+export const run = () => {
+    const config = loadConfig();
     const outdirFile = path.join(config.out.dir, config.out.file || '')
     const folderPath = path.join(config.folderPath)
     const files = fs.readdirSync(folderPath)
