@@ -17,7 +17,7 @@ export function loadConfig(path = './config.yml'): IConfig {
         throw new Error(`Unknown sort.exec preset: ${cfg.sort.exec}`)
     }
 
-    cfg.folderPath = cfg.folderPath.replaceAll('\\', '/')
+    cfg.folderPath = cfg.folderPath.map((x) => x.replaceAll('\\', '/'))
     cfg.out.dir = cfg.out.dir.replaceAll('\\', '/')
     cfg.out.file = cfg.out.file.replaceAll('\\', '/')
     return {

@@ -1,5 +1,5 @@
 export interface IConfig {
-    folderPath: string
+    folderPath: string[];
     blacklistedFiles: string[]
     out: {
         dir: string
@@ -19,7 +19,7 @@ export interface IConfig {
 }
 
 export interface IConfigStr {
-    folderPath: string
+    folderPath: string[]
     blacklistedFiles: string[]
     out: {
         dir: string
