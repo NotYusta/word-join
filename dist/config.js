@@ -44,13 +44,16 @@ const presets = {
     regex: presets_1.sortPresetRegex,
     starts_with: presets_1.sortPresetStartsWith,
 };
-function loadConfig(path = "./config.yml") {
-    const raw = fs.readFileSync(path, "utf8");
+function loadConfig(path = './config.yml') {
+    const raw = fs.readFileSync(path, 'utf8');
     const cfg = js_yaml_1.default.load(raw);
     const execFn = presets[cfg.sort.exec];
     if (!execFn) {
         throw new Error(`Unknown sort.exec preset: ${cfg.sort.exec}`);
     }
+    cfg.folderPath = cfg.folderPath.replaceAll('\\', '/');
+    cfg.out.dir = cfg.out.dir.replaceAll('\\', '/');
+    cfg.out.file = cfg.out.file.replaceAll('\\', '/');
     return {
         ...cfg,
         sort: {
